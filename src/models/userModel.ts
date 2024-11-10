@@ -24,7 +24,8 @@ const userSchema = new Schema<IUser>({
   },
   votedFor:{
     type:Schema.Types.ObjectId,
-    ref:"Candidate"
+    ref:"Candidate",
+    default:null
   }
 });
 
