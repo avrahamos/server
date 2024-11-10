@@ -4,10 +4,19 @@ import { compare, hash } from "bcrypt";
 
 export const userLogin = async (user: LoginDto) => {
   try {
-    const userFromDatabase = await UserModel.findOne({ username: user.username });
+    const userFromDatabase = await UserModel.findOne({
+      userName: user.userName, 
+    });
     if (!userFromDatabase) throw new Error("user not found");
+
     const match = await compare(user.password, userFromDatabase.password);
-    if (!match) throw new Error("wrong password");
+    if (!match) {
+      console.log("is match", match);
+      console.log("Input Password:", user.password);
+      console.log("Stored Encrypted Password:", userFromDatabase.password);
+
+      throw new Error("wrong password");
+    }
     return userFromDatabase;
   } catch (err) {
     throw err;
@@ -18,7 +27,8 @@ export const createNewUser = async (user: RegisterDto) => {
   try {
     console.log({ user });
     if (!user.password)
-      throw new Error("Missing user data, [password] is require");
+      throw new Error("Missing user data, [password] is required");
+
     const encPass = await hash(user.password, 10);
     user.password = encPass;
     const newUser = new UserModel(user);

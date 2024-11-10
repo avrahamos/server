@@ -1,21 +1,21 @@
-import mongoose, { Schema ,Document } from "mongoose"
+import mongoose, { Schema, Document } from "mongoose";
 
-export interface  IUser extends Document{
-    userName:string
-    password:string
-    isAdmin:boolean
-    hasVoted:boolean
-    votedFor:Schema.Types.ObjectId
-
+export interface IUser extends Document {
+  userName: string;
+  password: string;
+  isAdmin: boolean;
+  hasVoted: boolean;
+  votedFor: Schema.Types.ObjectId;
 }
+
 const userSchema = new Schema<IUser>({
   userName: {
     type: String,
     unique: true,
   },
-  password:{ 
-    type:String,
-    required:true
+  password: {
+    type: String,
+    required: true,
   },
   isAdmin: {
     type: Boolean,
@@ -25,11 +25,11 @@ const userSchema = new Schema<IUser>({
     type: Boolean,
     default: false,
   },
-  votedFor:{
-    type:Schema.Types.ObjectId,
-    ref:"Candidate",
-    default:null
-  }
+  votedFor: {
+    type: Schema.Types.ObjectId,
+    ref: "Candidate",
+    default: null,
+  },
 });
 
-export default mongoose.model<IUser>("User" , userSchema)
+export default mongoose.model<IUser>("User", userSchema);
