@@ -8,6 +8,8 @@ import { connectToMongo } from "./config/db";
 
 const PORT = process.env.PORT || 2000;
 const app = express();
+app.use(express.json());
+
 connectToMongo();
 
 app.use("/api/users", usersController);

@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { sid } from "../routers/candidates";
+import { getList, sid } from "../routers/candidates";
 
 const router = Router();
+
 router.post("/sid", sid);
+router.get("/", getList);
+
 export default router;

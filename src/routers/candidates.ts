@@ -1,13 +1,22 @@
 import { Request, Response } from "express";
-import { sidInitDB } from "../services/candidatesService";
+import { getCandidateList, sidInitDB } from "../services/candidatesService";
 
 export const sid = async (req: Request, res: Response) => {
   try {
     await sidInitDB();
-    res.sendStatus(201)
-  } catch (error) {
-    console.log(error);
-        res.sendStatus(401);
+    res.sendStatus(201);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
+export const getList = async (req: Request, res: Response) => {
+  try {
+    const list = await getCandidateList();
+    res.json(list);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
   }
 };

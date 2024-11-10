@@ -9,8 +9,11 @@ const adminController_1 = __importDefault(require("./controllers/adminController
 const usersController_1 = __importDefault(require("./controllers/usersController"));
 const candidatesController_1 = __importDefault(require("./controllers/candidatesController"));
 const votesController_1 = __importDefault(require("./controllers/votesController"));
+const db_1 = require("./config/db");
 const PORT = process.env.PORT || 2000;
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
+(0, db_1.connectToMongo)();
 app.use("/api/users", usersController_1.default);
 app.use("/api/admin", adminController_1.default);
 app.use("/api/votes", votesController_1.default);

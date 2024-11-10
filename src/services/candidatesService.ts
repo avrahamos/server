@@ -28,3 +28,12 @@ export const sidInitDB = async () => {
     console.log(error);
   }
 };
+export const getCandidateList = async () => {
+  try {
+    const list = await candidateModel.find({});
+    return list;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
