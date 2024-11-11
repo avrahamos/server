@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { createNewUser, userLogin } from "../services/userService";
-import { LoginDto, RegisterDto } from "../types/DTO/usersDto";
+import { createNewUser, getUserData, userLogin } from "../services/userService";
+import { LoginDto, ProfileDto, RegisterDto } from "../types/DTO/usersDto";
 
 export const login = async (req: Request, res: Response) => {
   try {
@@ -18,5 +18,17 @@ export const register = async (req: Request, res: Response) => {
     res.status(201).json(freshlyCreatedUser);
   } catch (err) {
     res.status(400).json((err as Error).message);
+  }
+};
+
+export const profile = async (
+  req: Request<any, any, ProfileDto>,
+  res: Response
+) => {
+  try {
+    const data = await getUserData(req.body)
+    res.status(201).json(data)
+  } catch (error) {
+    res.status(400).json((error as Error).message);
   }
 };

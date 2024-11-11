@@ -1,7 +1,8 @@
-import { LoginDto, RegisterDto } from "../types/DTO/usersDto";
+import { LoginDto, ProfileDto, RegisterDto } from "../types/DTO/usersDto";
 import UserModel from "../models/userModel";
 import { compare, hash } from "bcrypt";
 import jwt from "jsonwebtoken";
+import userModel from "../models/userModel";
 
 export const userLogin = async (user: LoginDto) => {
   try {
@@ -45,3 +46,20 @@ export const createNewUser = async (user: RegisterDto) => {
     throw new Error("Can't create new user");
   }
 };
+
+export const getUserData = async (user:ProfileDto)=>{
+  try {
+    if(!user.id){
+      throw new Error("Missing user data, [id] is required");
+
+    }
+    const currentUser = await userModel.findById(user.id).lean()
+    if(!currentUser){
+      throw new Error("user not found")
+      
+    }
+    return { hasVoted: currentUser.hasVoted, votedFor: currentUser.votedFor };
+  } catch (error) {
+    console.log(error)
+  }
+}
