@@ -1,18 +1,30 @@
 import { LoginDto, RegisterDto } from "../types/DTO/usersDto";
 import UserModel from "../models/userModel";
 import { compare, hash } from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const userLogin = async (user: LoginDto) => {
   try {
     const userFromDatabase = await UserModel.findOne({
       userName: user.userName,
-    });
+    }).lean();
     if (!userFromDatabase) throw new Error("user not found");
 
     const match = await compare(user.password, userFromDatabase.password);
     if (!match) throw new Error("wrong password");
+    const token = await jwt.sign(
+      {
+        userId: userFromDatabase._id,
+        isAdmi: userFromDatabase.isAdmin,
+        userName: userFromDatabase.userName,
+      },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "10m",
+      }
+    );
 
-    return userFromDatabase;
+    return { ...userFromDatabase, token, password: "**********" };
   } catch (err) {
     throw err;
   }

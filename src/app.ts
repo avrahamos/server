@@ -6,6 +6,7 @@ import candidatesController from "./controllers/candidatesController";
 import votesController from "./controllers/votesController";
 import { connectToMongo } from "./config/db";
 import cors from "cors";
+import { compare, hash } from "bcrypt";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
