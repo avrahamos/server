@@ -13,7 +13,6 @@ export const getCandidatesStatistics = async () => {
       },
     ]);
 
-    console.log("Statistics data:", statistics); 
     return statistics;
   } catch (error) {
     console.log("Error fetching statistics:", error);

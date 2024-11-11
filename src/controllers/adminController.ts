@@ -1,6 +1,6 @@
 import { Router } from "express";
-import veryfyAdmin from "../middlewares/veryfyAdmin";
 import { getStatistics } from "../routers/adminRouter";
+import veryfyAdmin from "../middlewares/veryfyAdmin";
 
 const router = Router()
 
