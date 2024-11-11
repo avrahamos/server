@@ -12,10 +12,11 @@ export const userLogin = async (user: LoginDto) => {
 
     const match = await compare(user.password, userFromDatabase.password);
     if (!match) throw new Error("wrong password");
-    const token = await jwt.sign(
+
+    const token = jwt.sign(
       {
         userId: userFromDatabase._id,
-        isAdmi: userFromDatabase.isAdmin,
+        isAdmin: userFromDatabase.isAdmin, 
         userName: userFromDatabase.userName,
       },
       process.env.JWT_SECRET as string,
@@ -29,7 +30,6 @@ export const userLogin = async (user: LoginDto) => {
     throw err;
   }
 };
-
 export const createNewUser = async (user: RegisterDto) => {
   try {
     if (!user.password)

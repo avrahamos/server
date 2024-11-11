@@ -3,8 +3,9 @@ import { getCandidateList, sidInitDB } from "../services/candidatesService";
 
 export const sid = async (req: Request, res: Response) => {
   try {
-    await sidInitDB();
-    res.sendStatus(201);
+    const result = await sidInitDB();
+    res.status(201).json(result);
+    console.log("sid", result);
   } catch (err) {
     console.log(err);
     res.sendStatus(400);
